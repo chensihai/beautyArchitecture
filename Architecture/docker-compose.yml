@@ -1,6 +1,16 @@
-version: '3.8'
+version: '3.1'
 
 services:
+
+  # init:
+  #   build:
+  #     context: ..
+  #     dockerfile: ./Architecture/init/Dockerfile
+  #   volumes:
+  #     - ../backend:/app/backend
+  #     - ../frontend:/app/frontend
+
+  
   frontend:
     build:
       context: ..
@@ -54,6 +64,7 @@ services:
       PMA_PASSWORD: rootpassword
     depends_on:
       - db
+
 
 volumes:
   dbdata:
