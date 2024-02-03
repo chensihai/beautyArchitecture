@@ -6,10 +6,12 @@ services:
   #   build:
   #     context: ..
   #     dockerfile: ./Architecture/init/Dockerfile
+  #   command: /init.sh 
   #   volumes:
+  #     - ./init/init.sh:/init.sh
   #     - ../backend:/app/backend
   #     - ../frontend:/app/frontend
-
+  # this move out as seperated docker-compose-init.yml, works good
   
   frontend:
     build:
