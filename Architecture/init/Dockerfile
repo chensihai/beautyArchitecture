@@ -12,8 +12,7 @@ php7-mbstring \
 php7-openssl \
 php7-json \
 php7-dom \
-curl
-RUN apk add php7-curl \
+php7-curl \
 php7-tokenizer \
 php7-phar \
 php7-xml \

@@ -1,16 +1,18 @@
 #!/bin/sh
 
 # Check if frontend directory does not exist
-# if [ ! -d "/app/frontend" ]; then
+if [ ! -f "/app/frontend/package.json" ]; then
   echo "Creating frontend directory..."
   create-react-app /app/frontend
-# fi
+  sleep 60
+fi
 
 # Check if backend directory does not exist
-# if [ ! -d "/app/backend" ]; then
+if [ ! -f "/app/backend/composer.json" ]; then
   echo "Creating backend directory..."
   composer create-project --prefer-dist laravel/lumen /app/backend
-# fi
+  sleep 60
+fi
 
 # Continue with the main command of the container
 # exec "$@"
