@@ -4,6 +4,7 @@
 if [ ! -f "/app/frontend/package.json" ]; then
   echo "Creating frontend directory..."
   create-react-app /app/frontend
+  rm -rf /app/frontend/node_modules
   sleep 60
 fi
 
@@ -11,6 +12,7 @@ fi
 if [ ! -f "/app/backend/composer.json" ]; then
   echo "Creating backend directory..."
   composer create-project --prefer-dist laravel/lumen /app/backend
+  rm -rf /app/backend/vendor
   sleep 60
 fi
 

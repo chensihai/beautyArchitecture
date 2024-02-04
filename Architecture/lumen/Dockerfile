@@ -31,13 +31,15 @@ php7 composer-setup.php --install-dir=/usr/bin --filename=composer && \
 php7 -r "unlink('composer-setup.php');"
 
 # copy all of the file in folder to /src
-COPY ./backend /src
-WORKDIR /src
-
+COPY ./backend /tmp/app
+WORKDIR /tmp/app
 RUN composer update
 
+RUN mv vendor / && rm -rf /tmp/app
+WORKDIR /app
 # run the php server service
 # move this command to -> docker-compose.yml
 # CMD php -S 0.0.0.0:8080 public/index.php
 
-# # RUN composer create-project --prefer-dist laravel/lumen /app
+# RUN composer create-project --prefer-dist laravel/lumen /tmp/lumen && mv /tmp/lumen/vendor / && rm -rf /tmp/lumen
+
