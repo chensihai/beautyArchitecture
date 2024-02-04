@@ -6,14 +6,21 @@ if [ ! -f "/app/frontend/package.json" ]; then
   create-react-app /app/frontend
   rm -rf /app/frontend/node_modules
   sleep 60
+  chown -R node /app/frontend
+  chgrp -R node /app/frontend
 fi
 
 # Check if backend directory does not exist
 if [ ! -f "/app/backend/composer.json" ]; then
   echo "Creating backend directory..."
   composer create-project --prefer-dist laravel/lumen /app/backend
-  rm -rf /app/backend/vendor
+  cd /app/backend
+  rm -rf vendor
+  ln -s vendor ../vendor
+  cd /app
   sleep 60
+  chown -R node /app/backend
+  chgrp -R node /app/backend
 fi
 
 # Continue with the main command of the container

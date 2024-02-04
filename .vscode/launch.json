@@ -7,6 +7,19 @@
         "name": "Launch Chrome against localhost",
         "url": "http://localhost:3000",
         "webRoot": "${workspaceFolder}/frontend",
-      }
+      },
+      {
+        "name": "Listen for XDebug",
+        "type": "php",
+        "request": "launch",
+        "port": 9003,
+        "pathMappings": {
+          "/app": "${workspaceFolder}/backend"
+        },
+        "env": {
+          "XDEBUG_MODE": "debug",
+          "XDEBUG_TRIGGER": "1234"
+      }        
+      }      
     ]
   }

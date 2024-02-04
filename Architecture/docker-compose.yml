@@ -28,7 +28,7 @@ services:
   backend:
     build:
       context: ..
-      dockerfile: ./Architecture/lumen/Dockerfile
+      dockerfile: ./Architecture/lumen/Dockerfile-dev
     ports:
       - "8080:8080"
     command: php -S 0.0.0.0:8080 public/index.php
