@@ -42,13 +42,18 @@ function App() {
           });
     
     }
-      debugger;
       const data = await response.json();
       console.log(data);
 
       if (response.ok) {
         alert(`Successfully ${isLogin ? 'logged in' : 'registered'}`);
         // Handle successful login/registration (e.g., store token, redirect, etc.)
+        //Store the token in local storage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('email', data.email);
+        //reload the page
+        window.location.reload();
       } else {
         alert(data.message || 'An error occurred');
       }
