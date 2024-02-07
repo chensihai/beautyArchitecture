@@ -9,9 +9,6 @@
 | Routes that do not require authentication.
 |
 */
-// use App\Http\Controllers\AuthController;
-// use App\Http\Controllers\UserController;
-
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     // Matches "/api/register"

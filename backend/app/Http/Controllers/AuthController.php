@@ -36,5 +36,36 @@ class AuthController extends BaseController
             return response()->json(['message' => 'User Registration Failed!'], 409);
         }
     }
+    // login function called when user logs in
+    public function login(Request $request)
+    {
+        //validate incoming request
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = \App\Models\User::where('email', $email)->first();
+
+        if (!$user) {
+            //return error message
+            return response()->json(['message' => 'Login Failed'], 401);
+        }
+
+        //verify the password
+        if (app('hash')->check($password, $user->password)) {
+            //generate token
+            $user->api_token = Str::random(60);
+            $user->save();
+            //return successful response
+            return response()->json(['user' => $user, 'message' => 'LOGGED IN'], 200);
+        } else {
+            //return error message
+            return response()->json(['message' => 'Login Failed'], 401);
+        }
+    }
 
 }
