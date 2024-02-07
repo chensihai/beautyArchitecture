@@ -1,33 +1,21 @@
 <?php
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-|
-| Routes that do not require authentication.
-|
-*/
+// Global OPTIONS response to handle CORS preflight requests
+$router->options('/{any:.*}', function () {
+    return response('', 200)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+});
 
-$router->group(['prefix' => 'api'], function () use ($router) {
-    // Matches "/api/register"
+// Public routes
+$router->group(['prefix' => 'api', 'middleware' => 'cors'], function () use ($router) {
     $router->post('register', 'AuthController@register');
-    // Matches "/api/login"
     $router->post('login', 'AuthController@login');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Protected Routes
-|--------------------------------------------------------------------------
-|
-| Routes that require authentication.
-|
-*/
-
-$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
-    // Define your authenticated routes here
-    // Example: Matches "/api/users/1"
-    // $router->get('users/{id}', 'UserController@show');
+// Protected routes
+$router->group(['prefix' => 'api', 'middleware' => ['auth', 'cors']], function () use ($router) {
+    // Define protected routes here
 });

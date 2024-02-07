@@ -7,7 +7,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 ))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -78,6 +77,7 @@ $app->configure('app');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'cors' => App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 /*
@@ -91,8 +91,11 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->configure('auth');
+
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*

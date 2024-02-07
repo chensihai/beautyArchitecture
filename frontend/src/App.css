@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+.appForm{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color: #f2f2f2;
+  float: left;
+  text-align: left;
+}
