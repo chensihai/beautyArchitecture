@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Builder</title>
+<style>
+  .component-list, .form-canvas { border: 1px solid #ccc; padding: 10px; }
+  .component-list { width: 200px; float: left; margin-right: 20px; }
+  .form-canvas { width: calc(100% - 240px); min-height: 400px; float: left; }
+  .draggable { cursor: move; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="component-list">
+  <div class="draggable" draggable="true">Date Input</div>
+  <div class="draggable" draggable="true">Text Input</div>
+  <div class="draggable" draggable="true">Select Dropdown</div>
+  <div class="draggable" draggable="true">Radio Buttons</div>
+  <div class="draggable" draggable="true">Checkbox Group</div>
+  <div class="draggable" draggable="true">Textarea</div>
+  <div class="draggable" draggable="true">Paragraph/Label</div>
+</div>
+
+<div class="form-canvas" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.innerText);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  var inputElement;
+  switch (data) {
+    case 'Date Input':
+      inputElement = document.createElement("input");
+      inputElement.type = "date";
+      break;
+    case 'Text Input':
+      inputElement = document.createElement("input");
+      inputElement.type = "text";
+      break;
+    case 'Select Dropdown':
+      inputElement = document.createElement("select");
+      inputElement.innerHTML = "<option>Option 1</option><option>Option 2</option>";
+      break;
+    case 'Radio Buttons':
+      inputElement = document.createElement("div");
+      inputElement.innerHTML = '<input type="radio" name="radio"> Option 1<br><input type="radio" name="radio"> Option 2';
+      break;
+    case 'Checkbox Group':
+      inputElement = document.createElement("div");
+      inputElement.innerHTML = '<input type="checkbox"> Option 1<br><input type="checkbox"> Option 2';
+      break;
+    case 'Textarea':
+      inputElement = document.createElement("textarea");
+      break;
+    case 'Paragraph/Label':
+      inputElement = document.createElement("p");
+      inputElement.innerText = "Your text here";
+      break;
+  }
+  ev.target.appendChild(inputElement);
+}
+
+var draggables = document.querySelectorAll('.draggable');
+draggables.forEach(function(item) {
+  item.addEventListener('dragstart', drag);
+});
+</script>
+
+</body>
+</html>

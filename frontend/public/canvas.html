@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Builder</title>
+<style>
+  .canvas { border: 1px solid #000; min-height: 300px; position: relative; }
+  .component { cursor: grab; margin-bottom: 10px; }
+  .draggable { position: absolute; cursor: grabbing; }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="component" draggable="true" data-type="date">Date Input</div>
+  <div class="component" draggable="true" data-type="text">Text Input</div>
+  <div class="component" draggable="true" data-type="select">Select Dropdown</div>
+  <div class="component" draggable="true" data-type="radio">Radio Buttons</div>
+  <div class="component" draggable="true" data-type="checkbox">Checkbox Group</div>
+  <div class="component" draggable="true" data-type="textarea">Textarea</div>
+</div>
+
+<div class="canvas" id="canvas"></div>
+<button id="saveBtn">Save</button>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  let draggableElement = null;
+
+  document.querySelectorAll('.component').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      draggableElement = e.target;
+    });
+  });
+
+  canvas.addEventListener('dragover', (e) => {
+    e.preventDefault();
+  });
+
+  canvas.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const type = draggableElement.getAttribute('data-type');
+    const newElement = document.createElement('div');
+    newElement.setAttribute('contenteditable', 'true');
+    newElement.classList.add('draggable');
+    newElement.style.left = `${e.clientX - canvas.offsetLeft}px`;
+    newElement.style.top = `${e.clientY - canvas.offsetTop}px`;
+
+    switch (type) {
+      case 'date':
+        newElement.innerHTML = '<label>Label</label><input type="date">';
+        break;
+      case 'text':
+        newElement.innerHTML = '<label>Label</label><input type="text" placeholder="Placeholder">';
+        break;
+      case 'select':
+        newElement.innerHTML = '<label>Label</label><select><option>Option 1</option></select>';
+        break;
+      case 'radio':
+        newElement.innerHTML = '<label>Label</label><input type="radio" name="radio"> Option';
+        break;
+      case 'checkbox':
+        newElement.innerHTML = '<label>Label</label><input type="checkbox"> Option';
+        break;
+      case 'textarea':
+        newElement.innerHTML = '<label>Label</label><textarea placeholder="Placeholder"></textarea>';
+        break;
+    }
+
+    canvas.appendChild(newElement);
+    addDraggableListeners(newElement);
+  });
+
+  function addDraggableListeners(element) {
+    element.addEventListener('mousedown', (e) => {
+      const offsetX = e.clientX - element.getBoundingClientRect().left;
+      const offsetY = e.clientY - element.getBoundingClientRect().top;
+
+      function mouseMoveHandler(e) {
+        element.style.left = `${e.clientX - offsetX - canvas.offsetLeft}px`;
+        element.style.top = `${e.clientY - offsetY - canvas.offsetTop}px`;
+      }
+
+      function mouseUpHandler() {
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+      }
+
+      document.addEventListener('mousemove', mouseMoveHandler);
+      document.addEventListener('mouseup', mouseUpHandler);
+    });
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const formElements = canvas.querySelectorAll('.draggable');
+    const formData = {
+      name: prompt('Enter form name:'),
+      label: prompt('Enter form label:'),
+      // created_date: new Date().toLocaleString(),
+      //Exception has occurred.
+//PDOException: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2024-02-08T17:26:21.531Z' for column 'created_date' at row 1
+
+      data:'{"name":"form1","label":"form1","elements":[{"label":"Label","type":"text","placeholder":"Placeholder"}]}',  
+      elements: []
+    };
+
+    formElements.forEach(el => {
+      const label = el.querySelector('label').innerText;
+      const inputType = el.querySelector('input, select, textarea').nodeName.toLowerCase();
+      const placeholder = el.querySelector('input, textarea') ? el.querySelector('input, textarea').placeholder : '';
+      formData.elements.push({ label, type: inputType, placeholder });
+    });
+
+    console.log(JSON.stringify(formData));
+    // Send formData to server, localhost:3000/api/form
+
+    fetch('http://localhost:8080/api/form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+  });
+</script>
+
+</body>
+</html>
