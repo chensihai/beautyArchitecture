@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable(); // Maps to "name"
             $table->string('first_name')->nullable(); // Maps to "firstName"
             $table->string('last_name')->nullable(); // Maps to "lastName", nullable because it's disabled in the form and might not be submitted
             $table->string('email')->unique(); // Maps to "email", unique because it's the username

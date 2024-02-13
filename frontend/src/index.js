@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import Page from './Page';
+import Auth from './Auth';
+import Canvas from './Canvas';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,13 +13,14 @@ const role = localStorage.getItem('role')??'';
 if(token=='' || role==''){
 root.render(
   <React.StrictMode>
-    <App />
+    <Auth />
   </React.StrictMode>
 );
 }else{
   root.render(
+    
     <React.StrictMode>
-      <Page />
+      <Canvas />
     </React.StrictMode>
   );
 }

@@ -49,3 +49,7 @@
   float: left;
   text-align: left;
 }
+
+.canvas { border: 1px solid #000; min-height: 300px; position: relative; }
+.component { cursor: grab; margin-bottom: 10px; }
+.draggable { position: absolute; cursor: grabbing; }
