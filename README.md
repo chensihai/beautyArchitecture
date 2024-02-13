@@ -1,4 +1,4 @@
-#git clone https://github.com/chensihai/test-fiyge.git \n
+#git clone https://github.com/chensihai/test-fiyge.git <br>
 #cd test-fiyge \n
 #docker-compose -f Architecture/docker-compose-init.yml up -d --build // this prepare codebase \n
 After few minutes \n
