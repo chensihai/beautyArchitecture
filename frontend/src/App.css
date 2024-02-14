@@ -53,3 +53,12 @@
 .canvas { border: 1px solid #000; min-height: 300px; position: relative; }
 .component { cursor: grab; margin-bottom: 10px; }
 .draggable { position: absolute; cursor: grabbing; }
+.menu { margin-top: 20px;}
+.menu ul { list-style: none; padding: 0; display: inline; width:auto; background-color: lightgray;}
+.menu ul li {
+  margin-bottom: 10px;
+  list-style: none;
+  display: inline;
+  padding-left: 10px;
+} /*get rid of the bullet points*/
+.menu ul li label { cursor: pointer; }  
