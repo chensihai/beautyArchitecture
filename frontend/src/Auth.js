@@ -47,7 +47,7 @@ function App() {
       console.log(data);
 
       if (response.ok) {
-        alert(`Successfully ${isLogin ? 'logged in' : 'registered'}`);
+        // alert(`Successfully ${isLogin ? 'logged in' : 'registered'}`);
         // Handle successful login/registration (e.g., store token, redirect, etc.)
         //Store the token in local storage
         localStorage.setItem('token', data.token);
