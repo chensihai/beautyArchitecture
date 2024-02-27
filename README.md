@@ -21,7 +21,7 @@ Clone the repository:
     cd beauty-architecture
     
 
-Initialize the codebase:
+Initialize the codebase(If you are happy to use existing frontend/ backend/ code, you can skip this step; or you'll get fresh frontend/ backend/ codes):
 
     docker-compose -f Architecture/docker-compose-init.yml up -d --build
     
